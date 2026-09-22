@@ -1,7 +1,7 @@
 from fastapi import FastAPI
-from pymongo import AsyncIOMotorClient
+from pymongo import AsyncMongoClient
 app = FastAPI()
-client = AsyncIOMotorClient("mongodb://localhost:27017/")
+client = AsyncMongoClient("mongodb://localhost:27017/")
 db = client["College"]
 
 # select collection
@@ -15,4 +15,4 @@ async def home():
 @app.get("/health")
 async def health():
     result = await db.command("ping")
-    return {"mongodb":"connected", "ping": result}
+    return {"mongodb":"connected", "ping": result["ok"]}
